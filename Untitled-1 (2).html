@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор ДСВ</title>
+    <link rel="stylesheet" href="Untitled-2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-calculator"></i> Калькулятор Дискретных Случайных Величин</h1>
+            <p class="subtitle">Расчет распределений, моментов и статистических характеристик</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Левая панель - ввод данных -->
+            <div class="input-panel">
+                <div class="section">
+                    <h2><i class="fas fa-sliders-h"></i> Настройки расчета</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Тип рядов:</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="seriesType" value="1" checked>
+                                <span class="radio-custom"></span>
+                                Одинаковые ряды
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="seriesType" value="2">
+                                <span class="radio-custom"></span>
+                                Разные ряды
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="seriesChoiceGroup">
+                        <label class="form-label">Ряд для операций:</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="seriesChoice" value="1" checked>
+                                <span class="radio-custom"></span>
+                                Ряд X
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="seriesChoice" value="2">
+                                <span class="radio-custom"></span>
+                                Ряд Y
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Операция:</label>
+                        <select id="operation" class="form-select">
+                            <option value="+">Сложение (+)</option>
+                            <option value="-">Вычитание (-)</option>
+                            <option value="*">Умножение (×)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Ряд X -->
+                <div class="section series-section" id="seriesX">
+                    <h2><i class="fas fa-chart-line"></i> Ряд X</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Значения x:</label>
+                        <input type="text" id="xValues" class="form-input" 
+                               placeholder="Например: 1 2 3 4" value="1 2 3 4">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Вероятности P(x):</label>
+                        <input type="text" id="xProbabilities" class="form-input" 
+                               placeholder="Например: 0.1 0.2 0.3 0.4" value="0.1 0.2 0.3 0.4">
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-label">Степень:</label>
+                                <input type="text" id="powerX" class="form-input" value="1">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-label">Множитель:</label>
+                                <input type="text" id="multiplierX" class="form-input" value="1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ряд Y -->
+                <div class="section series-section" id="seriesY">
+                    <h2><i class="fas fa-chart-bar"></i> Ряд Y</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Значения y:</label>
+                        <input type="text" id="yValues" class="form-input" 
+                               placeholder="Например: 5 6 7 8" value="5 6 7 8">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Вероятности P(y):</label>
+                        <input type="text" id="yProbabilities" class="form-input" 
+                               placeholder="Например: 0.4 0.3 0.2 0.1" value="0.4 0.3 0.2 0.1">
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-label">Степень:</label>
+                                <input type="text" id="powerY" class="form-input" value="1">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-label">Множитель:</label>
+                                <input type="text" id="multiplierY" class="form-input" value="1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="calculateBtn" class="btn-calculate">
+                    <i class="fas fa-calculator"></i> Рассчитать
+                </button>
+            </div>
+
+            <!-- Правая панель - результаты -->
+            <div class="result-panel">
+                <div class="tabs">
+                    <button class="tab active" data-tab="results">Результаты</button>
+                    <button class="tab" data-tab="distribution">Распределение</button>
+                    <button class="tab" data-tab="moments">Моменты</button>
+                    <button class="tab" data-tab="info">Информация</button>
+                </div>
+
+                <div class="tab-content active" id="resultsTab">
+                    <h2><i class="fas fa-chart-pie"></i> Основные результаты</h2>
+                    <div class="results-container">
+                        <div class="result-card">
+                            <h3>Новый ряд</h3>
+                            <div id="resultValues" class="result-text">...</div>
+                        </div>
+                        
+                        <div class="result-row">
+                            <div class="result-item">
+                                <h4>Математическое ожидание</h4>
+                                <div class="value" id="Mx">0</div>
+                            </div>
+                            <div class="result-item">
+                                <h4>Дисперсия</h4>
+                                <div class="value" id="Dx">0</div>
+                            </div>
+                            <div class="result-item">
+                                <h4>Среднеквадратичное отклонение</h4>
+                                <div class="value" id="Sigma">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="distributionTab">
+                    <h2><i class="fas fa-table"></i> Распределение вероятностей</h2>
+                    <table class="distribution-table">
+                        <thead>
+                            <tr>
+                                <th>Значение (Z)</th>
+                                <th>Вероятность P(Z)</th>
+                                <th>Вероятность (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="distributionTable">
+                            <!-- Данные будут заполнены через JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tab-content" id="momentsTab">
+                    <h2><i class="fas fa-chart-area"></i> Моменты распределения</h2>
+                    
+                    <div class="moments-grid">
+                        <div class="moment-section">
+                            <h3>Начальные моменты</h3>
+                            <div id="initialMoments" class="moment-list">
+                                <!-- Данные будут заполнены через JS -->
+                            </div>
+                        </div>
+                        
+                        <div class="moment-section">
+                            <h3>Центральные моменты</h3>
+                            <div id="centralMoments" class="moment-list">
+    <script src="document.js"></script>
+</body>
+</html>
