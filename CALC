@@ -87,3 +87,50 @@ calculator = SeriesCalculator()
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/calculate', methods=['POST'])
+def calculate():
+    try:
+        data = request.json
+        
+        # Парсинг данных
+        x_values = calculator.parse_input(data['x_values'])
+        x_probs = calculator.parse_input(data['x_probs'])
+        y_values = calculator.parse_input(data['y_values'])
+        y_probs = calculator.parse_input(data['y_probs'])
+        
+        # Проверка данных
+        if len(x_values) != len(x_probs) or len(y_values) != len(y_probs):
+            return jsonify({'error': 'Количество значений и вероятностей должно совпадать'}), 400
+        
+        if abs(sum(x_probs) - 1.0) > 0.0001 or abs(sum(y_probs) - 1.0) > 0.0001:
+            return jsonify({'error': 'Сумма вероятностей должна равняться 1'}), 400
+        
+        # Применение трансформаций
+        x_values = calculator.apply_transform(x_values, data['power_x'], data['multiplier_x'])
+        y_values = calculator.apply_transform(y_values, data['power_y'], data['multiplier_y'])
+        
+        # Вычисление распределения
+        distribution = calculator.compute_distribution(
+            x_values, x_probs, 
+            y_values, y_probs, 
+            data['operation']
+        )
+        
+        # Вычисление статистик
+        stats = calculator.calculate_statistics(
+            distribution['values'], 
+            distribution['probabilities']
+        )
+        
+        return jsonify({
+            'success': True,
+            'distribution': distribution,
+            'statistics': stats
+        })
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)
