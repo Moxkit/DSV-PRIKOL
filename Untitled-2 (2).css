@@ -1,0 +1,487 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    color: #2d3748;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.header .subtitle {
+    color: #4a5568;
+    font-size: 1.1rem;
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+/* Стили для панели ввода */
+.input-panel {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.section {
+    margin-bottom: 30px;
+    padding-bottom: 25px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.section:last-child {
+    border-bottom: none;
+}
+
+.section h2 {
+    color: #2d3748;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #4a5568;
+}
+
+.form-input, .form-select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    background: white;
+}
+
+.form-input:focus, .form-select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.radio-group {
+    display: flex;
+    gap: 25px;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.radio-label input {
+    display: none;
+}
+
+.radio-custom {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #cbd5e0;
+    border-radius: 50%;
+    position: relative;
+    transition: all 0.3s;
+}
+
+.radio-custom::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background: #667eea;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.radio-label input:checked + .radio-custom {
+    border-color: #667eea;
+}
+
+.radio-label input:checked + .radio-custom::after {
+    opacity: 1;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.btn-calculate {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-calculate:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+}
+
+.btn-calculate:active {
+    transform: translateY(0);
+}
+
+/* Стили для панели результатов */
+.result-panel {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.tabs {
+    display: flex;
+    background: #f7fafc;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.tab {
+    flex: 1;
+    padding: 18px 20px;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #4a5568;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.tab.active {
+    color: #667eea;
+    background: white;
+}
+
+.tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.tab:hover:not(.active) {
+    background: #edf2f7;
+}
+
+.tab-content {
+    padding: 25px;
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.results-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.result-card {
+    background: #f7fafc;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #e2e8f0;
+}
+
+.result-card h3 {
+    color: #2d3748;
+    margin-bottom: 15px;
+}
+
+.result-text {
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+    color: #2d3748;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.result-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.result-item {
+    background: #f7fafc;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    border: 2px solid #e2e8f0;
+}
+
+.result-item h4 {
+    color: #4a5568;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+}
+
+.result-item .value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #667eea;
+}
+
+/* Таблица распределения */
+.distribution-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.distribution-table th {
+    background: #f7fafc;
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #2d3748;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.distribution-table td {
+    padding: 15px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.distribution-table tr:hover {
+    background: #f7fafc;
+}
+
+/* Моменты распределения */
+.moments-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.moment-section {
+    background: #f7fafc;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #e2e8f0;
+}
+
+.moment-section h3 {
+    color: #2d3748;
+    margin-bottom: 15px;
+}
+
+.moment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.moment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.moment-label {
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.moment-value {
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    color: #667eea;
+}
+
+.coefficients {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.coeff-item {
+    background: #f7fafc;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    border: 2px solid #e2e8f0;
+}
+
+.coeff-item h4 {
+    color: #4a5568;
+    margin-bottom: 10px;
+}
+
+/* Информационная панель */
+.info-card {
+    background: #f7fafc;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border: 2px solid #e2e8f0;
+}
+
+.info-card h3 {
+    color: #2d3748;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-card1 h3 {
+    color: #2d3748;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-card1 {
+    background: #f7fafc;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border: 2px solid #e2e8f0;
+}
+
+.info-card1 li {
+    margin-left: 25px;
+    margin-bottom: 5px;
+}
+
+.instructions {
+    margin-left: 20px;
+}
+
+.instructions li {
+    margin-bottom: 8px;
+    color: #4a5568;
+}
+
+.authors {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.authors h3 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .result-row,
+    .moments-grid,
+    .coefficients {
+        grid-template-columns: 1fr;
+    }
+    
+    .radio-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .tabs {
+        flex-wrap: wrap;
+    }
+    
+    .tab {
+        flex: 1 0 50%;
+    }
+}
+
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .container {
+        padding: 10px;
+    }
+    
+    .input-panel,
+    .result-panel {
+        padding: 15px;
+    }
+    
+    .row {
+        grid-template-columns: 1fr;
+    }
+}
